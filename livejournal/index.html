@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html ng-app="daybookModule">
+<head>
+    <title>Дневник</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	<script src="../angular-locale_uk-ua.js"></script>
+	<!--
+	<script src="../angular-locale_ru-ru.js"></script>
+	<script src="../angular-locale_uk-ua.js"></script>
+	-->
+    <script src="script.js"></script>
+    
+    <link href="../bootstrap.css" rel="stylesheet" />
+    <link href="../bootstrap-theme.css" rel="stylesheet" />
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+    <div class="daybook" ng-controller="DaybookCtrl">
+		
+		
+		
+		<div class="col-md-2 col-lg-2 col-xs-12 col-sm-12 tags-column">
+		    <b>Облако тегов:</b><br /><br />
+			<div ng-repeat="item in tags">
+		        <a href="#" ng-click="selectByTag(item)">{{item}}</a>
+			</div>
+			<div>
+		        <a href="#" ng-click="selectByTag(selectByTag)">Все записи</a>
+			</div>
+			<br />
+		</div>
+        <div class="col-md-10 col-lg-10 col-xs-12 col-sm-12 ">
+		
+			
+			  <h2 class="md-flex">Дневник</h2>
+			
+			
+			<p><b>Сортировка</b></p>
+			<div class="row">
+				<div class="col-md-4">
+					<p>Количество записей на страницу:</p>
+				</div>
+			</div>	
+			<div class="row">
+				<div class="col-md-4">
+					<select class="form-control" style="width:100%" ng-model="limitValue" ng-options="item for item in limitRange"></select>
+					
+				</div>
+				<div ng-show="writer" class="col-md-8 write-button-block">
+					
+					<md-button class="md-raised right md-warn" ng-click="writeInBlog()">Написать в блог</md-button>
+					
+				</div>
+			</div>
+			<br/>  
+			
+            <form ng-hide="writer">
+				<input class="form-control" type="text" ng-model="itemTitle" size="30" placeholder="Добавить заголовок">	  
+				<br/>	   
+                <textarea class="form-control" ng-model="itemText" placeholder="Добавить событие">  </textarea> 
+				<br/>
+				<input class="form-control" type="text" ng-model="itemMark" size="30" placeholder="Добавить метку">	  
+                <br/>			
+                <md-button class="md-raised md-warn" ng-click="writeInBlogClose()">Закрыть</md-button>				
+				<md-button class="md-raised right md-warn" ng-click="addItem()">Добавить</md-button>
+				
+            </form>
+			
+			<br />
+           
+			<div class="item" ng-repeat="item in items | limitTo:limitValue | filter:{mark:itemfilter}:true " > 
+			    <div class="show-{{item.visible}}">
+					<div><span>{{item.data | date:"dd MMM hh:mm:ss"}}</span></div>
+					<div><h2>{{item.title}}</h2></div>
+					<div><span>{{item.text}}</span></div>
+					<div class="tags">
+						<md-button class="md-raised md-warn left" ng-click="removeItem($index)">Удалить</md-button>
+						<md-button class="md-raised md-warn left" ng-click="editItem($index)">Редактировать</md-button>
+						<span class="tag">
+							  Категория: <span>{{item.mark}}</span>
+						</span>
+					</div>
+				</div>
+				
+				<form class="hide-{{item.visible}}">
+				    Заголовок:<br/>
+					<input class="form-control" type="text" ng-model="item.title" size="30" >	  
+					<br/>	
+                    Текст:<br/>					
+					<textarea class="form-control" ng-model="item.text" >  </textarea> 
+					<br/>
+					Категория:<br/>
+					<input class="form-control" type="text" ng-model="item.mark" size="30" >	  
+					
+					<br/>			
+                    <!--<input type="submit" class="md-raised right md-warn" value="Сохранить" >-->
+					<md-button class="md-raised md-warn right" ng-click="edition($index)">Сохранить</md-button>
+				</form>
+				
+			</div>
+            
+        </div>
+		
+		
+		
+    </div>
+</body>
+</html>
