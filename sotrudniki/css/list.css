@@ -1,0 +1,12 @@
+﻿.spoiler.collapsed:before {
+    content: "Открыть ";
+}
+.spoiler:before {
+    content: "Закрыть ";
+}
+#pagination {
+  text-align: center;
+}
+.spoiler{
+margin-bottom:10px !important
+}

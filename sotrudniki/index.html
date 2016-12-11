@@ -1,0 +1,337 @@
+﻿<!doctype html>
+<html ng-app="daybookModule">
+<head>
+    <title>Расписание сотрудников</title>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>	
+	<script type="text/javascript" src="js/bootstrap.js"></script>	
+	<script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/daybook.js"></script>
+    <link href="css/list.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.css" rel="stylesheet" />
+	<!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">-->
+</head>
+<body>
+    <div class="container" ng-controller="DaybookCtrl">
+        <h2 class="h1">Расписание сотрудников</h2>
+        <div class="panel" >
+			
+			<h2>Сотрудники</h2>
+            <table class="table table-striped">
+			    <thead style="background:#ccc">
+				    <tr>
+					    <th><b>#</b></th>
+					    <th><b>ФИО</b></th>
+						<th><b>Пол</b></th>
+						<th><b>Контактная информация</b></th>
+						<!--<th><b>Табельное время</b></th>-->
+						<th><b>Дата добавления</b></th>
+						<th colspan="2" align="right"></th>
+					</tr>
+				</thead>	
+                <tbody>
+                    <tr ng-repeat-start="item in items | startFrom: startingItem() | limitTo: itemsPerPage" > 
+                        
+						<td ><span>{{$index+1}}.</span></td>
+						
+						<td><span>{{item.fio}}</span></td>
+						<td><span>{{item.sex}}</span></td>
+						<td><span>{{item.contact}}</span></td>
+						
+						
+						<td><span>{{item.data | date:"dd MMM hh:mm:ss"}}</span></td>
+						
+						
+						<td>
+							<span><button class="btn btn-danger" ng-click="removeItem($index)">Удалить</button></span>
+						</td>
+						<td>
+							<span><button class="btn btn-success" data-toggle="modal" data-target="#modal-1-{{$index}}" >Редактировать</button></span>
+							
+							<div class="modal fade" id="modal-1-{{$index}}" aria-hidden="true" style="display: none;">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button class="close" type="button" data-dismiss="modal">
+												x
+											</button>
+											<h4 class="modal-title-title">Редактировать сотрудника</h4>
+										</div>
+										<div class="modal-body">
+										
+											<form ng-submit="addItem()">
+												<div class="form-group">
+													<label for="itemFio">ФИО</label>
+													<input class="form-control" type="text" ng-model="item.fio">  
+												</div>		
+												<div class="form-group">	
+													<label for="itemSex">Пол</label>
+													<span>{{item.sex}}</span>
+												</div>		
+												<div class="form-group">
+													<label for="itemContact">Контактная информация</label>
+													<textarea class="form-control" ng-model="item.contact"> </textarea>
+												</div>		
+												<div class="form-group">
+                                                    <button class="btn btn-primary" type="button" data-dismiss="modal">Готово</button>	
+												</div>	
+											</form>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</td>
+						
+                    </tr>
+					
+					<tr ng-repeat-end> 
+					    <td></td>
+                        <td colspan="6">
+						
+						    <a href="#spoiler-{{$index}}" class="btn btn-primary spoiler collapsed" data-toggle="collapse" aria-expanded="false">расписание сотрудника {{item.fio}}</a> 
+							
+							<div class="collapse" id="spoiler-{{$index}}" aria-expanded="false" style="height: 0px;">
+								<table class="table table-striped" >
+									<thead style="background:#ccc">
+										<tr>
+											<th><b>День недели:</b></th>
+											<th><b>Время начала рабочего дня:</b></th>
+											<th><b>Время окончания рабочего дня:</b></th>
+										</tr>
+									</thead>	
+									<tbody>
+										<tr ng-repeat="time in item.time" > 
+											<td><span>{{time.day}}</span></td>
+											<td><span>{{time.startwork}}</span></td>
+											<td><span>{{time.endwork}}</td>
+										</tr>
+										<tr > 
+											<td colspan="3"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-2-{{$index}}">Редактировать расписание сотрудника {{item.fio}}</button></td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<div class="modal fade" id="modal-2-{{$index}}" aria-hidden="true" style="display: none;">
+									<div class="modal-dialog modal-sm">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button class="close" type="button" data-dismiss="modal">
+													x
+												</button>
+												<h4 class="modal-title-title">Расписание сотрудника</h4>
+											</div>
+											<div class="modal-body">
+											
+												<form>
+													<table class="table table-striped">
+														<thead style="background:#ccc">
+															<tr>
+																<th><b>День недели:</b></th>
+																<th><b>Время начала рабочего дня:</b></th>
+																<th><b>Время окончания рабочего дня:</b></th>
+															</tr>
+														</thead>	
+														<tbody>
+															<tr ng-repeat="time in item.time" > 
+																
+																<td><input class="form-control" type="text" ng-model="time.day" >	</td>
+																<td><input class="form-control" type="text" ng-model="time.startwork" ></td>
+																<td><input class="form-control" type="text" ng-model="time.endwork" ></td>
+																
+															</tr>
+															<tr> 
+																<td colspan="3"><button class="btn btn-primary right" data-dismiss="modal">Готово</button></td>
+															</tr>
+														</tbody>
+													</table>
+												</form>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							
+						</td>	
+						
+                    </tr>
+                </tbody>
+            </table>
+			
+			
+			<div id="pagination" >
+			
+				<button class="pull-left btn btn-primary btn-sm" ng-disabled="firstPage()" ng-click="pageBack()">Назад</button>
+				<span>{{currentPage+1}} из {{numberOfPages()}}</span>
+				<button class="pull-right  btn btn-primary btn-sm" ng-disabled="lastPage()" ng-click="pageForward()">Вперед</button>
+				
+			</div>
+			<br />
+			
+			<br />
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-1">Добавить сотрудника</button>
+			<br /><br />
+			
+			
+			
+			<h2>Структура подразделения</h2>
+            <table class="table table-striped">
+			    <thead style="background:#ccc">
+				    <tr>
+					    <th><b>#</b></th>
+					    <th><b>Департамент</b></th>
+						<th><b>Шеф</b></th>
+						<th><b>Подчиненные </b></th>
+						<th colspan="2"><b> </b></th>
+					</tr>
+				</thead>	
+				<tbody style="background:#ccc">
+				    <tr ng-repeat="department in structure">
+					    <!--<td>{{department.departmentname}}</td>
+						<td>{{department.chief}}</td>
+						<td>{{department.chief}}</td>-->
+					    <td>{{$index+1}}</td>
+						<td>{{department.departmentname}}</td>
+						<td>{{department.chief}}</td>
+						<td> {{department.subordinates}}</td>
+						<td>
+							<span><button class="btn btn-danger" ng-click="removeDepartment($index)">Удалить</button></span>
+						</td>
+						<td>
+						
+						   <button class="btn btn-success" data-toggle="modal" data-target="#modal-structure-{{$index}}" >Редактировать</button>
+							<div class="modal fade" id="modal-structure-{{$index}}" aria-hidden="true" style="display: none;">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button class="close" type="button" data-dismiss="modal">
+												x
+											</button>
+											<h4 class="modal-title-title">Редактировать Департамент</h4>
+										</div>
+										<div class="modal-body">
+										
+											<form >
+												<div class="form-group">
+													<label for="department_name">Департамент</label>
+													<input id="department_name" class="form-control" type="text" ng-model="department.departmentname">  
+												</div>		
+												<div class="form-group">	
+												    <label for="department_chief">Шеф</label>
+													<input id="department_chief" class="form-control" type="text" ng-model="department.chief">
+												</div>		
+												<div class="form-group">
+												
+												    <div class="form-group">
+														<label for="departmentSubordinates">Подчиненные</label>
+														<textarea id="departmentSubordinates" class="form-control" ng-model="department.subordinates" > хуй </textarea> 
+													</div>	
+													
+												</div>		
+												
+												<div class="form-group">
+													<button class="btn btn-primary right" data-dismiss="modal">Готово</button>
+												</div>
+												
+												
+											</form>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						
+						</td>
+						
+					</tr>
+				</tbody>	
+			</table>
+			
+			<br />
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-department">Добавить подразделение</button>
+			<br /><br />
+			
+			
+			<div class="modal fade" id="modal-1" aria-hidden="true" style="display: none;">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" type="button" data-dismiss="modal">
+								x
+							</button>
+							<h4 class="modal-title-title">Добавить сотрудника</h4>
+						</div>
+						<div class="modal-body">
+							<form ng-submit="addItem()">
+								<div class="form-group">
+									<label for="itemFio">ФИО</label>
+									<input id="itemFio" class="form-control" type="text" ng-model="itemFio"   placeholder="Добавить сотрудника">	  
+								</div>		
+								<div class="form-group">	
+									<label for="itemSex">Пол</label>
+									<select id="itemSex" class="form-control" ng-options="itemSex for itemSex in ['Mужской','Женский']" ng-model="itemSex" ></select>
+								</div>		
+								<div class="form-group">
+									<label for="itemContact">Контактная информация</label>
+									<textarea id="itemContact" class="form-control" ng-model="itemContact" placeholder="Добавить контактную информацию">  </textarea> 
+								</div>		
+								<div class="form-group">				
+									<input class="btn btn-primary" type="submit" value="Добавить"> <button type="button" class="btn btn-success" data-dismiss="modal">Закрыть</button>
+								</div>	
+							</form>
+						</div>
+						<!--<div class="modal-footer">
+							<button class="btn btn-danger" type="button" data-dismiss="modal">Close</button>
+						</div>-->
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="modal-department" aria-hidden="true" style="display: none;">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button class="close" type="button" data-dismiss="modal">
+								x
+							</button>
+							<h4 class="modal-title-title">Добавить подразделение</h4>
+						</div>
+						<div class="modal-body">
+							<form ng-submit="addDepartment()">
+								<div class="form-group">
+									<label for="department">Департамент</label>
+									<input id="department" class="form-control" type="text" ng-model="departmentName"  placeholder="Добавить департамент">	  
+								</div>		
+								<div class="form-group">	
+									<label for="chief">Шеф</label>
+									<select class="form-control" ng-model="departmentChief">
+									   <option ng-repeat="item in items" label="{{item.fio}}" value="{{item.fio}}">{{item.fio}}</option>
+									</select>
+								</div>		
+								<div class="form-group">
+								    <label for="departmentSubordinates">Подчиненные</label>
+									<textarea id="departmentSubordinates" class="form-control" ng-model="departmentSubordinates" placeholder="Подчиненные">  </textarea> 
+								</div>		
+								<div class="form-group">				
+									<input class="btn btn-primary" type="submit" value="Добавить"> <button type="button" class="btn btn-success" data-dismiss="modal">Закрыть</button>
+								</div>	
+							</form>
+						</div>
+						<!--<div class="modal-footer">
+							<button class="btn btn-danger" type="button" data-dismiss="modal">Close</button>
+						</div>-->
+					</div>
+				</div>
+			</div>
+			
+			
+		
+			
+			
+        </div>
+    </div>
+</body>
+</html>
