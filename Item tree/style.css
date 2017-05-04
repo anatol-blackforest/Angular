@@ -1,0 +1,93 @@
+﻿body, html{
+background:#390E0D;
+color:#C60;
+//height:auto !important;
+}
+.hide{
+	display:none;
+}
+.show{
+	display:block;
+}
+a{
+color:#C60 !important;
+}
+
+.alert{
+color:red;
+background:#3a0e0d;
+margin:10px 0;
+font-size:20px;
+}
+.daybook{
+max-width:300px; 
+margin:0 auto;
+padding:0 20px;
+position:relative;
+overflow:hidden;
+}
+.tags{
+position:relative;
+overflow:hidden;
+padding:10px 0;
+border-bottom:1px solid #4c1614;
+}
+.tags span.tag{
+float:right;
+text-align:right;
+font-weight:bold;
+padding-top:15px;
+}
+.tags span.tag span{
+cursor:pointer
+}
+.tags span.tag span:hover{
+color:#fff;
+}
+.tags-column{
+padding-top:60px;
+background: #4c1614;
+min-height:600px;
+//display:table-cell
+}
+.item{
+    padding:10px 0;
+	padding-left:20px;
+	position:relative;
+	overflow:hidden;
+}
+.item > form{
+    padding:5px;
+	position:relative;
+	overflow:hidden;
+	background:#fff
+}
+.item > form input, .item > form select{
+    width:100%;
+	margin:2px 0
+}
+.md-flex,
+.md-toolbar-tools {
+ font-size: 40px;
+}
+.md-raised.right{
+float:right
+}
+.hide-true, .show-false{
+display:none
+}
+.show-true, .hide-false{
+display:block
+}
+@media screen and (max-width: 960px) {
+    .tags-column{
+	min-height:auto;
+	}
+}
+
+
+
+
+
+
+

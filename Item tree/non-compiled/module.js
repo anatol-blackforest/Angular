@@ -1,0 +1,1 @@
+﻿let myLifeApp = angular.module('myLifeApp', []);

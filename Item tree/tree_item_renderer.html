@@ -1,0 +1,33 @@
+﻿<div class="item handler" id="{{item.ID}}" ng-if="item._type == 'handler'">
+	Я {{item.value}} 
+	<a href="#" ng-click="open($event, item.ID)">[+]</a>
+	<a href="#" data-id="{{item.ID}}" ng-click="delete(item.ID, item, $index)">[x]</a>
+	<form id="form-{{item.ID}}" ng-controller='daybookAddCtrl' ng-submit="add($event, item.ID)" class="hide">
+		<select ng-change="change()" ng-model="type" ng-options="elem.type for elem in typeList track by elem.track"></select>
+		<input type="text" ng-model="value" placeholder="{{placeholder}}" size="30" >	 
+		<input type="submit" value="Сохранить" >
+	</form>
+</div>
+<div class="item interval" id="{{item.ID}}" ng-if="item._type == 'interval'">
+	Через {{item.value}}  часов/часа
+	<a href="#" ng-click="open($event, item.ID)">[+]</a>
+	<a href="#" data-id="{{item.ID}}" ng-click="delete(item.ID, item, $index)">[x]</a>
+	<form id="form-{{item.ID}}" ng-controller='daybookAddCtrl' ng-submit="add($event, item.ID)" class="hide">
+		<select ng-change="change()" ng-model="type" ng-options="elem.type for elem in typeList track by elem.track"></select>
+		<input type="text" ng-model="value" placeholder="{{placeholder}}" size="30" >	 
+		<input type="submit" value="Сохранить" >
+	</form>
+</div>
+<div class="item group" id="{{item.ID}}" ng-if="item._type == 'group'">
+	Потом {{item.value}}
+	<a href="#" ng-click="open($event, item.ID)">[+]</a>
+	<a href="#" data-id="{{item.ID}}" ng-click="delete(item.ID, item, $index)">[x]</a>
+	<form id="form-{{item.ID}}" ng-controller='daybookAddCtrl' ng-submit="add($event, item.ID)" class="hide">
+		<select ng-change="change()" ng-model="type" ng-options="elem.type for elem in typeList track by elem.track"></select>
+		<input type="text" ng-model="value" placeholder="{{placeholder}}" size="30" >	 
+		<input type="submit" value="Сохранить" >
+	</form>
+	
+	<div ng-repeat="item in item.nodes" ng-include="'tree_item_renderer.html'"></li>
+	
+</div>
