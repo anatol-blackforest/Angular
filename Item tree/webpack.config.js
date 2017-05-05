@@ -1,7 +1,7 @@
 module.exports = {
   context: __dirname + "/start",
   entry: {
-    app: ["angular", "./module.js","./main-controller.js","./add-controller.js"],
+    app: ["angular", "./data.js", "./module.js","./main-controller.js","./add-controller.js"],
   },
   output: {
     path: __dirname + "/final",
