@@ -1,5 +1,3 @@
-const webpack = require("webpack");
-
 module.exports = {
   context: __dirname + "/start",
   entry: {
@@ -8,6 +6,17 @@ module.exports = {
   output: {
     path: __dirname + "/final",
     filename: "index.js",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: [{
+          loader: "babel-loader",
+          options: { presets: ["es2015"] }
+        }],
+      },
+    ],
   },
   devServer: {
     inline:true,
