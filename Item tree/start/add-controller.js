@@ -1,4 +1,6 @@
-﻿myLifeApp.controller('daybookAddCtrl', function($scope) {
+//file 3 start
+let myLifeApp = require('./module'); 
+myLifeApp.controller('daybookAddCtrl', function($scope) {
 	
     $scope.typeList = [
 	    {track:"handler", type:'Действие'},
@@ -67,3 +69,4 @@
 	};
 	
 });
+//file 3 end

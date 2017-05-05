@@ -1,4 +1,6 @@
-﻿myLifeApp.controller('daybookCtrl', function($scope) {
+﻿//file 2 start
+let myLifeApp = require('./module'); 
+myLifeApp.controller('daybookCtrl', function($scope) {
 	$scope.groupID = 0;
 	$scope.data = [
 		{
@@ -62,20 +64,4 @@
 	};
 	
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//file 2 end
